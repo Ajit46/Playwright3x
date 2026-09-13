@@ -1,1 +1,44 @@
 console.log('HELLO WORLD');
+let a = 5 + 8 ;
+console.log(a);
+
+////////////////////
+
+let s = 'hfghfsgs'
+console.log(typeof s);
+console.log('Ajit' + 'Singh')
+console.log('Ajit' + ' Singh')
+
+// Ternary Operator
+let time = 2;
+let will_Ajit_going_to_succeed= time>=2? 'Yes':'No';
+console.log(will_Ajit_going_to_succeed);
+
+//nested
+
+let age= 31;
+let Ajit_eat= 'Veg Food'
+let will_Ajit_enjoy_life =age>=30?(Ajit_eat='Veg Food'?'Yes':'No') :'No';
+console.log(will_Ajit_enjoy_life);
+
+
+//Null Coalescing Operator
+let isAjit_Available = null;
+let result= isAjit_Available ?? 'Nikita is available';
+console.log(result);
+
+//
+let data = 'Beast';
+switch(data){
+    case 'Suar':
+        console.log('You are Suar ');
+    break;;
+    case 'Kutta':
+        console.log('You are Kutta');
+    break;  
+    case 'Beast':
+        console.log('You are Beast');
+    break;
+}
+
+     
