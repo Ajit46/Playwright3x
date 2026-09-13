@@ -49,6 +49,46 @@ Use sources in this order:
    - Use only to identify testability concerns, common risk areas, or useful questions.
    - Never use it to invent application behavior or requirements.
 
+ 7. ## Reference examples
+
+The files under `references/examples/` are reference examples only.
+
+Use these examples to understand:
+
+- Professional test-plan structure
+- Section organization
+- Appropriate level of detail
+- Test scenario presentation
+- P0/P1/P2 prioritization
+- Requirement and acceptance-criteria traceability
+- Test data and environment presentation
+- Risks and assumptions
+- Entry and exit criteria
+- Overall QA documentation style
+
+Reference examples must NOT be treated as requirements.
+
+Never copy or infer current-project-specific:
+
+- Requirements
+- Acceptance criteria
+- Business rules
+- Test data
+- Environment details
+- Configuration
+- User roles
+- Dates
+- Integrations
+- Expected results
+- Maximo behavior
+
+Current project evidence always takes precedence over the examples.
+
+If an example conflicts with the current ADO work item,
+Requirement/Functional Document, linked ADO task, or other approved
+project document, ignore the example and follow the current project
+evidence.
+
 ## Source reconciliation rules
 
 - The Functional Document is the baseline for detailed functional behavior.
