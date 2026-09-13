@@ -51,36 +51,36 @@ Use sources in this order:
 
  7. ## Reference examples
 
-The files under `references/examples/` are reference examples only.
+    The files under `references/examples/` are reference examples only.
 
-Use these examples to understand:
+    Use these examples to understand:
 
-- Professional test-plan structure
-- Section organization
-- Appropriate level of detail
-- Test scenario presentation
-- P0/P1/P2 prioritization
-- Requirement and acceptance-criteria traceability
-- Test data and environment presentation
-- Risks and assumptions
-- Entry and exit criteria
-- Overall QA documentation style
+    - Professional test-plan structure
+    - Section organization
+    - Appropriate level of detail
+    - Test scenario presentation
+    - P0/P1/P2 prioritization
+    - Requirement and acceptance-criteria traceability
+    - Test data and environment presentation
+    - Risks and assumptions
+    - Entry and exit criteria
+    - Overall QA documentation style
 
 Reference examples must NOT be treated as requirements.
 
 Never copy or infer current-project-specific:
 
-- Requirements
-- Acceptance criteria
-- Business rules
-- Test data
-- Environment details
-- Configuration
-- User roles
-- Dates
-- Integrations
-- Expected results
-- Maximo behavior
+   - Requirements
+   - Acceptance criteria
+   - Business rules
+   - Test data
+   - Environment details
+   - Configuration
+   - User roles
+   - Dates
+   - Integrations
+   - Expected results
+   - Maximo behavior
 
 Current project evidence always takes precedence over the examples.
 
