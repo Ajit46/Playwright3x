@@ -117,6 +117,24 @@ class AssetMeterPage extends BasePage {
                 throw new Error(`Unknown button: ${buttonName}`);
         }
     }
+     async verifyMoreSearchFieldsDisplayed(fields) {
+
+        for (const fieldName of fields) {
+
+            const field = this.frame.getByText(fieldName, {
+                exact: true
+            });
+
+            await expect(
+                field,
+                `More Search Field "${fieldName}" should be displayed`
+            ).toBeVisible({ timeout: 10000 });
+
+            console.log(`Verified More Search Field: ${fieldName}`);
+        }
+    }
+
+
 }
 
 module.exports = AssetMeterPage;
