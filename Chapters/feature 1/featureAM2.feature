@@ -3,8 +3,11 @@ Scenario: Verify all fields displayed in More Search Fields for Asset Meter appl
 
     Given Default information is set to "THAM"
     And Click ok to Default Information
+
     When User opens the Maximo application "Asset Meter"
+
     When User clicks on "Quick Search" menu
+
     Then the following Quick Search options should be displayed:
         | More Search Fields |
         | Where Clause |
@@ -14,20 +17,5 @@ Scenario: Verify all fields displayed in More Search Fields for Asset Meter appl
         | Bookmarks |
 
     When User clicks on "More Search Fields"
-    Then the following More Search Fields should be displayed:
-        | Asset |
-        | Asset Description |
-        | Remaining Operation Capacity (MVA) |
-        | Starting operation Capacity (MVA) |
-        | Single Autoreclose value |
-        | Autoreclose |
-        | Earth fault? |
-        | Fault Level |
-        | Full trips |
-        | Operating/ Primary Voltage |
-        | Operational ID |
-        | Substation |
-        | Substation Location |
-        | Arc Extinguishing Factor |
-        | Arc Extinguishing Medium |
-        | Three Phase Fault Rating (MVA) |
+
+    Then all More Search Fields should be displayed

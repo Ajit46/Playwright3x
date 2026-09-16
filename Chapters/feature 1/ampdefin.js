@@ -200,3 +200,14 @@ Then(
         console.log('"Cancel" button is displayed');
     }
 );
+Then(
+    'the following More Search Fields should be displayed:',
+    async function (dataTable) {
+
+        const fields = dataTable.raw().flat();
+
+        for (const fieldName of fields) {
+            await this.assetMeterPage.verifyMoreSearchFieldDisplayed(fieldName);
+        }
+    }
+);
