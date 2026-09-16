@@ -134,6 +134,19 @@ class AssetMeterPage extends BasePage {
         }
     }
 
+    async clickButton(buttonName) {
+
+    switch (buttonName) {
+
+        case "Revise":
+            await this.reviseButton.click();
+            break;
+
+        default:
+            throw new Error(`Unknown button: ${buttonName}`);
+    }
+}
+
     async verifyReviseOptionDisplayed(optionName) {
 
         const option = this.frame.getByText(optionName, {

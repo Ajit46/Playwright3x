@@ -211,7 +211,18 @@ Then(
         }
     }
 );
+When(
+    'User clicks on {string}',
+    async function (buttonName) {
 
+        const assetMeterPage =
+            new AssetMeterPage(this.page);
+
+        await assetMeterPage.clickButton(buttonName);
+
+        console.log(`Clicked on "${buttonName}"`);
+    }
+);
 Then(
     'the following Revise options should be displayed:',
     async function (dataTable) {
