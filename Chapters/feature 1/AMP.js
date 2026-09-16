@@ -134,6 +134,24 @@ class AssetMeterPage extends BasePage {
         }
     }
 
+    async verifyReviseOptionDisplayed(optionName) {
+
+        const option = this.frame.getByText(optionName, {
+            exact: true
+        });
+
+        await expect(
+            option,
+            `Revise option "${optionName}" should be displayed`
+        ).toBeVisible({
+            timeout: 10000
+        });
+
+        console.log(
+            `Verified Revise option: ${optionName}`
+        );
+    }
+
 
 }
 

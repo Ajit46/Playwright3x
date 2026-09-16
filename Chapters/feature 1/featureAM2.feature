@@ -19,3 +19,18 @@ Scenario: Verify all fields displayed in More Search Fields for Asset Meter appl
     When User clicks on "More Search Fields"
 
     Then all More Search Fields should be displayed
+
+    @MASUPG-CUSTAPPS-SI-TC-103
+Scenario: Verify options displayed after clicking Revise in More Search Fields for Asset Meter application
+
+    Given Default information is set to "THAM"
+    And Click ok to Default Information
+    When User opens the Maximo application "Asset Meter"
+    When User clicks on "Quick Search" menu
+    When User clicks on "More Search Fields"
+    When User clicks on "Revise"
+    Then the following Revise options should be displayed:
+        | Clear Query and Fields |
+        | Clear All Fields |
+        | Change Query |
+        | Restore Default Query |

@@ -211,3 +211,25 @@ Then(
         }
     }
 );
+
+Then(
+    'the following Revise options should be displayed:',
+    async function (dataTable) {
+
+        const assetMeterPage =
+            new AssetMeterPage(this.page);
+
+        const options = dataTable.raw().flat();
+
+        for (const optionName of options) {
+
+            console.log(
+                "Revise option value:",
+                JSON.stringify(optionName)
+            );
+
+            await assetMeterPage
+                .verifyReviseOptionDisplayed(optionName);
+        }
+    }
+);
