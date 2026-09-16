@@ -12,7 +12,15 @@ Feature: Asset Meter Application
 
     When User clicks on "Quick Search" menu
 
-    And User clicks on "More Search Fields"
+    Then the following Quick Search options should be displayed:
+      | More Search Fields |
+      | Where clause       |
+      | View Search tips   |
+      | Save Current Query |
+      | View/manage Queries|
+      | Bookmarks          |
+
+    When User clicks on "More Search Fields"
 
     Then "More Search Fields" popup should be displayed
 
