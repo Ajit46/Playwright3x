@@ -295,3 +295,38 @@ Then(
         );
     }
 );
+When('User clicks enter', async function () {
+
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.clickEnter();
+
+    console.log('User pressed Enter');
+});
+
+
+Then('the Asset Meter list should be loaded', async function () {
+
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.verifyAssetMeterListLoaded();
+
+    console.log('Asset Meter list is loaded');
+});
+
+
+Then(
+    'the following List View actions should be displayed:',
+    async function (dataTable) {
+
+        const assetMeterPage = new AssetMeterPage(this.page);
+
+        const actions = dataTable.raw().flat();
+
+        await assetMeterPage.verifyListViewActionsDisplayed(actions);
+
+        console.log(
+            `Verified List View actions: ${actions.join(', ')}`
+        );
+    }
+);

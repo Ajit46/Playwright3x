@@ -218,6 +218,82 @@ async clickViewSearchTips() {
 
         return newPage;
     }
+
+     async clickEnter() {
+        const filterField = this.frame.locator('input:visible').first();
+
+        await filterField.waitFor({
+            state: 'visible',
+            timeout: 10000
+        });
+
+        await filterField.press('Enter');
+    }
+
+    /**
+     * Wait until Asset Meter records are actually loaded.
+     *
+     * data-has-data="false" = empty/initial state
+     * data-has-data="true"  = records loaded
+     */
+    async verifyAssetMeterListLoaded() {
+        const loadedRow = this.frame.locator(
+            'tr[data-has-data="true"]'
+        ).first();
+
+        await loadedRow.waitFor({
+            state: 'visible',
+            timeout: 30000
+        });
+    }
+
+    /**
+     * Verify List View toolbar actions
+     */
+    async verifyListViewActionsDisplayed(actions) {
+
+        for (const action of actions) {
+
+            let locator;
+
+            switch (action.trim()) {
+
+                case 'Clear Filter':
+                    locator = this.frame.locator(
+                        'a[title="Clear Filter"], button[title="Clear Filter"]'
+                    ).first();
+                    break;
+
+                case 'Reload':
+                    locator = this.frame.locator(
+                        'a[title="Reload"], button[title="Reload"]'
+                    ).first();
+                    break;
+
+                case 'Download':
+                    locator = this.frame.locator(
+                        'a[title="Download"], button[title="Download"]'
+                    ).first();
+                    break;
+
+                case 'Maximize':
+                    locator = this.frame.locator(
+                        'a[title="Maximize"], button[title="Maximize"]'
+                    ).first();
+                    break;
+
+                default:
+                    throw new Error(`Unsupported List View action: ${action}`);
+            }
+
+            await expect(
+                locator,
+                `"${action}" should be displayed`
+            ).toBeVisible({
+                timeout: 10000
+            });
+        }
+    }
 }
 
 module.exports = AssetMeterPage;

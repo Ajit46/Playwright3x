@@ -55,3 +55,17 @@ Scenario: Verify View Search Tips opens in a new browser tab
     When User clicks on "Quick Search"
     When User clicks on "View Search Tips"
     Then a new browser tab should be opened
+
+@MAS9UPG-CUSTAPPS-ST-106
+Scenario: Verify icons and action items available in List View
+
+    Given Default information is set to "THAM"
+    And Click ok to Default Information
+    When User opens the Maximo application "Asset Meter"
+    When User clicks enter
+    Then the Asset Meter list should be loaded
+    And the following List View actions should be displayed:
+      | Clear Filter |
+      | Reload |
+      | Download |
+      | Maximize |
