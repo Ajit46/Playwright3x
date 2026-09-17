@@ -1,4 +1,5 @@
 const BasePage = require("./BasePage");
+const fs = require('fs');
 
 class AssetMeterPage extends BasePage {
     constructor(page) {
@@ -294,6 +295,36 @@ async clickViewSearchTips() {
             });
         }
     }
+async downloadAssetMeterRecords() {
+    const downloadPromise = this.page.waitForEvent('download');
+
+    await this.frame
+        .locator('a[title="Download"], button[title="Download"]')
+        .first()
+        .click();
+
+    const download = await downloadPromise;
+
+    const fileName = download.suggestedFilename();
+
+    // Verify downloaded file is an Excel file
+    expect(fileName).toMatch(/\.xlsx$/i);
+
+    // Get downloaded file path
+    const filePath = await download.path();
+
+    // Verify file was downloaded
+    expect(filePath).toBeTruthy();
+
+    // Verify file has content
+    const fileStats = fs.statSync(filePath);
+    expect(fileStats.size).toBeGreaterThan(0);
+
+    console.log(`Downloaded file: ${fileName}`);
+    console.log(`Downloaded file size: ${fileStats.size} bytes`);
+
+    return download;
+}
 }
 
 module.exports = AssetMeterPage;

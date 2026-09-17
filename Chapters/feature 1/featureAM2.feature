@@ -69,3 +69,13 @@ Scenario: Verify icons and action items available in List View
       | Reload |
       | Download |
       | Maximize |
+
+@MASUPG-CUSTAPPS-SI-TC-107
+Scenario: Verify Asset Meter records can be downloaded in Excel format
+
+    Given User logs in to Maximo with the required credentials
+    When User navigates to Assets -> Asset Meter
+    When User clicks enter
+    Then the Asset Meter list should be loaded
+    When User clicks on the Download icon
+    Then the Asset Meter records should be downloaded successfully in Excel format

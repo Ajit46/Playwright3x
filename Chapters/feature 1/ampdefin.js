@@ -330,3 +330,22 @@ Then(
         );
     }
 );
+When('User clicks on the Download icon', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    this.download = await assetMeterPage.downloadAssetMeterRecords();
+});
+Then(
+    'the Asset Meter records should be downloaded successfully in Excel format',
+    async function () {
+        expect(this.download).toBeTruthy();
+
+        const fileName = this.download.suggestedFilename();
+
+        expect(fileName).toMatch(/\.xlsx$/i);
+
+        console.log(
+            `Verified: Asset Meter records downloaded successfully in Excel format - ${fileName}`
+        );
+    }
+);
