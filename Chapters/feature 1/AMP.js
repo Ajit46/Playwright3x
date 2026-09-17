@@ -164,7 +164,19 @@ class AssetMeterPage extends BasePage {
             `Verified Revise option: ${optionName}`
         );
     }
+async clickWhereClause() {
+    const whereClause = this.frame.getByText("Where Clause", {
+        exact: true
+    });
 
+    await expect(whereClause).toBeVisible({
+        timeout: 10000
+    });
+
+    await whereClause.click();
+
+    console.log('Clicked on "Where Clause"');
+}
 async verifyWhereClauseElementsDisplayed(elements) {
     for (const elementName of elements) {
 

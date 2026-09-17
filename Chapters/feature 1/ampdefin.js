@@ -245,6 +245,18 @@ Then(
     }
 );
 
+When(
+    'User clicks on "Where Clause"',
+    async function () {
+
+        const assetMeterPage = new AssetMeterPage(this.page);
+
+        await assetMeterPage.clickWhereClause();
+
+        console.log('Clicked on "Where Clause"');
+    }
+)
+
 Then(
     'the following Where Clause elements should be displayed:',
     async function (dataTable) {
