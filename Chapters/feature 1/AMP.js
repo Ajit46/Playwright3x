@@ -199,6 +199,25 @@ async verifyWhereClauseElementsDisplayed(elements) {
         console.log(`Verified Where Clause element: ${elementName}`);
     }
 }
+async clickViewSearchTips() {
+
+        const context = this.page.context();
+
+        // Start listening BEFORE clicking
+        const newPagePromise = context.waitForEvent("page");
+
+        // Same locator type as Where Clause
+        await this.frame.getByText("View Search Tips", {
+            exact: true
+        }).click();
+
+        // Capture newly opened tab
+        const newPage = await newPagePromise;
+
+        await newPage.waitForLoadState();
+
+        return newPage;
+    }
 }
 
 module.exports = AssetMeterPage;

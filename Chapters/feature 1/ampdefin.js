@@ -268,3 +268,30 @@ Then(
         await assetMeterPage.verifyWhereClauseElementsDisplayed(elements);
     }
 );
+When(
+    'User clicks on "View Search Tips"',
+    async function () {
+
+        const assetMeterPage =
+            new AssetMeterPage(this.page);
+
+        this.newPage =
+            await assetMeterPage.clickViewSearchTips();
+
+        console.log('Clicked on "View Search Tips"');
+        console.log('New browser tab opened');
+    }
+);
+Then(
+    'a new browser tab should be opened',
+    async function () {
+
+        expect(this.newPage).toBeTruthy();
+
+        await this.newPage.waitForLoadState();
+
+        console.log(
+            'Verified: View Search Tips opened in a new browser tab'
+        );
+    }
+);

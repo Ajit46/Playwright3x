@@ -46,3 +46,12 @@ Scenario: Verify Where Clause popup for Asset Meter
     | Current Query |
     | Find |
     | Cancel |
+
+@MAS9UPG-CUSTAPPS-ST-05
+Scenario: Verify View Search Tips opens in a new browser tab
+    Given Default information is set to "THAM"
+    And Click ok to Default Information
+    When User opens the Maximo application "Asset Meter"
+    When User clicks on "Quick Search"
+    When User clicks on "View Search Tips"
+    Then a new browser tab should be opened
