@@ -325,6 +325,34 @@ async downloadAssetMeterRecords() {
 
     return download;
 }
+async clickAnyAssetMeterRecord() {
+    await this.frame
+        .locator('tbody tr[data-has-data="true"]')
+        .first()
+        .click();
+}
+
+async getAssetNumber() {
+    const assetField = this.frame
+        .locator('input[role="textbox"].fld_text.fld_ro')
+        .first();
+
+    return await assetField.inputValue();
+}
+
+async clickNextRecord() {
+    await this.frame
+        .locator('#toolactions_NEXT-tbb')
+        .first()
+        .click();
+}
+
+async clickPreviousRecord() {
+    await this.frame
+        .locator('#toolactions_PREVIOUS-tbb')
+        .first()
+        .click();
+}
 }
 
 module.exports = AssetMeterPage;

@@ -79,3 +79,17 @@ Scenario: Verify Asset Meter records can be downloaded in Excel format
     Then the Asset Meter list should be loaded
     When User clicks on the Download icon
     Then the Asset Meter records should be downloaded successfully in Excel format
+
+@MASUPG-CUSTAPPS-SI-TC-108
+Scenario: Verify Next and Previous Record navigation in Asset Meter
+
+    Given Default information is set to "THAM"
+    And Click ok to Default Information
+    When User opens the Maximo application "Asset Meter"
+    When User clicks enter
+    Then the Asset Meter list should be loaded
+    When User clicks on any Asset Meter record
+    And User clicks on the Next Record arrow twice
+    Then the Asset Meter record should change
+    When User clicks on the Previous Record arrow
+    Then the Asset Meter record should change back

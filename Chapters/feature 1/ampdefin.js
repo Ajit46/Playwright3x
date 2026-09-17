@@ -349,3 +349,51 @@ Then(
         );
     }
 );
+When('User clicks on any Asset Meter record', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.clickAnyAssetMeterRecord();
+
+    this.firstAsset = await assetMeterPage.getAssetNumber();
+
+    console.log(`First Asset: ${this.firstAsset}`);
+});
+When('User clicks on the Next Record arrow twice', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.clickNextRecord();
+
+    this.secondAsset = await assetMeterPage.getAssetNumber();
+
+    console.log(`Second Asset: ${this.secondAsset}`);
+
+    await assetMeterPage.clickNextRecord();
+
+    this.thirdAsset = await assetMeterPage.getAssetNumber();
+
+    console.log(`Third Asset: ${this.thirdAsset}`);
+});
+Then('the Asset Meter record should change', async function () {
+    expect(this.secondAsset).not.toBe(this.firstAsset);
+    expect(this.thirdAsset).not.toBe(this.secondAsset);
+
+    console.log(
+        `Verified records changed: ${this.firstAsset} -> ${this.secondAsset} -> ${this.thirdAsset}`
+    );
+});
+When('User clicks on the Previous Record arrow', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.clickPreviousRecord();
+
+    this.previousAsset = await assetMeterPage.getAssetNumber();
+
+    console.log(`Previous Asset: ${this.previousAsset}`);
+});
+Then('the Asset Meter record should change back', async function () {
+    expect(this.previousAsset).toBe(this.secondAsset);
+
+    console.log(
+        `Verified Previous Record: ${this.thirdAsset} -> ${this.previousAsset}`
+    );
+});
