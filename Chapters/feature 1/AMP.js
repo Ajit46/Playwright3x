@@ -165,7 +165,28 @@ class AssetMeterPage extends BasePage {
         );
     }
 
+async verifyWhereClauseElementsDisplayed(elements) {
+    for (const elementName of elements) {
 
+        let element;
+
+        if (elementName === "Current Query") {
+            element = this.page.getByText("Current Query", { exact: true });
+        } else {
+            element = this.page.getByRole("button", {
+                name: elementName,
+                exact: true
+            });
+        }
+
+        await expect(
+            element,
+            `"${elementName}" should be displayed`
+        ).toBeVisible({ timeout: 10000 });
+
+        console.log(`Verified Where Clause element: ${elementName}`);
+    }
+}
 }
 
 module.exports = AssetMeterPage;

@@ -34,3 +34,15 @@ Scenario: Verify options displayed after clicking Revise in More Search Fields f
         | Clear All Fields |
         | Change Query |
         | Restore Default Query |
+
+
+Scenario: Verify Where Clause popup for Asset Meter
+  Given Default information is set to "THAM"
+  And Click ok to Default Information
+  When User opens the Maximo application "Asset Meter"
+  When User clicks on "Quick Search"
+  When User clicks on "Where Clause"
+  Then the following Where Clause elements should be displayed:
+    | Current Query |
+    | Find |
+    | Cancel |

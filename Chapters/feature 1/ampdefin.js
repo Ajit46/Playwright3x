@@ -244,3 +244,15 @@ Then(
         }
     }
 );
+
+Then(
+    'the following Where Clause elements should be displayed:',
+    async function (dataTable) {
+
+        const assetMeterPage = new AssetMeterPage(this.page);
+
+        const elements = dataTable.raw().flat();
+
+        await assetMeterPage.verifyWhereClauseElementsDisplayed(elements);
+    }
+);
