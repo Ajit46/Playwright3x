@@ -674,6 +674,27 @@ async enterNewReadingValue(fieldName, value) {
         `Entered "${value}" in "${fieldName}"`
     );
 }
+async validateCheckbox(checkboxName) {
+
+    const checkbox = this.frame.getByRole('checkbox', {
+        name: checkboxName,
+        exact: true
+    });
+
+    await expect(
+        checkbox,
+        `"${checkboxName}" checkbox should be displayed`
+    ).toBeVisible({ timeout: 10000 });
+
+    await checkbox.click();
+
+    await expect(
+        checkbox,
+        `"${checkboxName}" checkbox should be checked`
+    ).toBeChecked();
+
+    console.log(`Verified and checked checkbox: ${checkboxName}`);
+}
 } 
 
 module.exports = AssetMeterPage;
