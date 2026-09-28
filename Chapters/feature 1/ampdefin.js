@@ -397,3 +397,16 @@ Then('the Asset Meter record should change back', async function () {
         `Verified Previous Record: ${this.thirdAsset} -> ${this.previousAsset}`
     );
 });
+When('User clicks on the Reload icon', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.clickReload();
+
+    console.log('Clicked on Reload icon');
+});
+
+Then('the Asset Meter list should be refreshed', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.verifyAssetMeterListRefreshed();
+});

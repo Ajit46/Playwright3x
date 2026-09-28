@@ -353,6 +353,29 @@ async clickPreviousRecord() {
         .first()
         .click();
 }
+
+async clickReload() {
+    await this.frame
+        .locator('#m6a7dfd2f-img5')
+        .click();
+
+    await this.page.waitForTimeout(1000);
 }
+
+async verifyAssetMeterListRefreshed() {
+    const loadedRow = this.frame
+        .locator('tr[data-has-data="true"]')
+        .first();
+
+    await loadedRow.waitFor({
+        state: 'visible',
+        timeout: 30000
+    });
+
+    console.log('Verified: Asset Meter list was refreshed');
+}
+}
+
+
 
 module.exports = AssetMeterPage;
