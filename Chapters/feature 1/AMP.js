@@ -374,8 +374,171 @@ async verifyAssetMeterListRefreshed() {
 
     console.log('Verified: Asset Meter list was refreshed');
 }
-}
+    // =========================================================
+    // FIRST ASSET FROM LIST
+    // =========================================================
+
+    async clickFirstAsset() {
+        const firstAsset = this.frame
+            .locator('tr[data-has-data="true"]')
+            .first()
+            .locator('td')
+            .first();
+
+        await firstAsset.click();
+    }
 
 
+    // =========================================================
+    // ASSET DETAILS
+    // =========================================================
+
+    async verifyAssetDetailsOpened() {
+        await expect(
+            this.frame.getByText('Asset Details', { exact: true })
+        ).toBeVisible({ timeout: 10000 });
+    }
+
+
+    // =========================================================
+    // LONG DESCRIPTION
+    // =========================================================
+
+    async clickLongDescription() {
+        await this.frame
+            .getByText('Long Description', { exact: true })
+            .click();
+    }
+
+
+    async verifyLongDescriptionOpened() {
+        await expect(
+            this.frame.getByText('Long Description', { exact: true })
+        ).toBeVisible({ timeout: 10000 });
+    }
+
+
+    // =========================================================
+    // ASSET DETAILS - MINIMIZE / MAXIMIZE
+    // =========================================================
+
+    async clickAssetDetailsMinimizeMaximize() {
+        await this.frame
+            .locator('#mfb1d780b-ti')
+            .click();
+    }
+
+
+    // =========================================================
+    // SERIAL #
+    // =========================================================
+
+    async verifySerialNumberDisplayed() {
+        const serialNumber = this.frame.getByText(
+            'Serial #',
+            { exact: true }
+        );
+
+        await expect(
+            serialNumber,
+            'Serial # field should be displayed'
+        ).toBeVisible({ timeout: 10000 });
+    }
+
+
+    async verifySerialNumberNotDisplayed() {
+        const serialNumber = this.frame.getByText(
+            'Serial #',
+            { exact: true }
+        );
+
+        await expect(
+            serialNumber,
+            'Serial # field should not be displayed'
+        ).not.toBeVisible({ timeout: 10000 });
+    }
+
+
+    // =========================================================
+    // OPERATING / PRIMARY VOLTAGE
+    // =========================================================
+
+    async verifyOperatingPrimaryVoltageDisplayed() {
+        const operatingVoltage = this.frame.getByText(
+            'Operating/ Primary Voltage',
+            { exact: true }
+        );
+
+        await expect(
+            operatingVoltage,
+            'Operating/Primary Voltage field should be displayed'
+        ).toBeVisible({ timeout: 10000 });
+    }
+
+
+    async verifyOperatingPrimaryVoltageNotDisplayed() {
+        const operatingVoltage = this.frame.getByText(
+            'Operating/ Primary Voltage',
+            { exact: true }
+        );
+
+        await expect(
+            operatingVoltage,
+            'Operating/Primary Voltage field should not be displayed'
+        ).not.toBeVisible({ timeout: 10000 });
+    }
+
+
+    // =========================================================
+    // AFTER FAULT MAINTENANCE
+    // =========================================================
+
+    async clickAfterFaultMaintenanceMinimizeMaximize() {
+        await this.frame
+            .locator('#m591e1015-ti')
+            .click();
+    }
+
+
+    // =========================================================
+    // FULL TRIPS
+    // =========================================================
+
+    async verifyFullTripsDisplayed() {
+        const fullTrips = this.frame.getByText(
+            'Full trips',
+            { exact: true }
+        );
+
+        await expect(
+            fullTrips,
+            'Full trips field should be displayed'
+        ).toBeVisible({ timeout: 10000 });
+    }
+
+
+    async verifyFullTripsNotDisplayed() {
+        const fullTrips = this.frame.getByText(
+            'Full trips',
+            { exact: true }
+        );
+
+        await expect(
+            fullTrips,
+            'Full trips field should not be displayed'
+        ).not.toBeVisible({ timeout: 10000 });
+    }
+
+
+    // =========================================================
+    // ENTER NEW READING
+    // =========================================================
+
+    async clickEnterNewReadingMinimizeMaximize() {
+        await this.frame
+            .locator('#m3fdf179-ti')
+            .click();
+    }
+} 
 
 module.exports = AssetMeterPage;

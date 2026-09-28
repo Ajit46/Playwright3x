@@ -410,3 +410,140 @@ Then('the Asset Meter list should be refreshed', async function () {
 
     await assetMeterPage.verifyAssetMeterListRefreshed();
 });
+
+// =========================================================
+// FIRST ASSET
+// =========================================================
+
+When('User clicks on the first Asset from the list', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.clickFirstAsset();
+});
+
+
+Then('Asset Details screen should be opened', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.verifyAssetDetailsOpened();
+});
+
+
+// =========================================================
+// LONG DESCRIPTION
+// =========================================================
+
+When('User clicks on the "Long Description" icon', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.clickLongDescription();
+});
+
+
+Then('Long Description window should be opened', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.verifyLongDescriptionOpened();
+});
+
+
+// =========================================================
+// ASSET DETAILS MINIMIZE / MAXIMIZE
+// =========================================================
+
+When(
+    'User clicks on the "Minimize/Maximize" button under Asset Details',
+    async function () {
+        const assetMeterPage = new AssetMeterPage(this.page);
+
+        await assetMeterPage.clickAssetDetailsMinimizeMaximize();
+    }
+);
+
+
+// =========================================================
+// SERIAL #
+// =========================================================
+
+Then('the "Serial #" field should be displayed', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.verifySerialNumberDisplayed();
+});
+
+
+Then('the "Serial #" field should not be displayed', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.verifySerialNumberNotDisplayed();
+});
+
+
+// =========================================================
+// OPERATING / PRIMARY VOLTAGE
+// =========================================================
+
+Then(
+    'the "Operating/Primary Voltage" field should be displayed',
+    async function () {
+        const assetMeterPage = new AssetMeterPage(this.page);
+
+        await assetMeterPage.verifyOperatingPrimaryVoltageDisplayed();
+    }
+);
+
+
+Then(
+    'the "Operating/Primary Voltage" field should not be displayed',
+    async function () {
+        const assetMeterPage = new AssetMeterPage(this.page);
+
+        await assetMeterPage.verifyOperatingPrimaryVoltageNotDisplayed();
+    }
+);
+
+
+// =========================================================
+// AFTER FAULT MAINTENANCE
+// =========================================================
+
+When(
+    'User clicks on the "Minimize/Maximize" button under After Fault Maintenance',
+    async function () {
+        const assetMeterPage = new AssetMeterPage(this.page);
+
+        await assetMeterPage.clickAfterFaultMaintenanceMinimizeMaximize();
+    }
+);
+
+
+// =========================================================
+// FULL TRIPS
+// =========================================================
+
+Then('the "Full trips" field should be displayed', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.verifyFullTripsDisplayed();
+});
+
+
+Then('the "Full trips" field should not be displayed', async function () {
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    await assetMeterPage.verifyFullTripsNotDisplayed();
+});
+
+
+// =========================================================
+// ENTER NEW READING
+// =========================================================
+
+When(
+    'User clicks on the "Minimize/Maximize" button under Enter New Reading',
+    async function () {
+        const assetMeterPage = new AssetMeterPage(this.page);
+
+        await assetMeterPage.clickEnterNewReadingMinimizeMaximize();
+    }
+);
