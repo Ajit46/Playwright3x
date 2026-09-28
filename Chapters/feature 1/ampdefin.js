@@ -547,3 +547,42 @@ When(
         await assetMeterPage.clickEnterNewReadingMinimizeMaximize();
     }
 );
+When('User enters the following values:', async function (dataTable) {
+
+    const assetMeterPage = new AssetMeterPage(this.page);
+
+    const data = dataTable.rows();
+
+    for (const [field, value] of data) {
+
+        switch (field) {
+
+            case 'Full trips':
+                await assetMeterPage.enterFullTrips(value);
+                break;
+
+            case 'Reduced trips':
+                await assetMeterPage.enterReducedTrips(value);
+                break;
+
+            case 'Autoreclose':
+                await assetMeterPage.enterAutoreclose(value);
+                break;
+
+            case 'New Reading Date':
+                await assetMeterPage.enterNewReadingDate(value);
+                break;
+
+            case 'Control Engineer':
+                await assetMeterPage.enterControlEngineer(value);
+                break;
+
+            case 'Notes':
+                await assetMeterPage.enterNotes(value);
+                break;
+
+            default:
+                throw new Error(`Unsupported field: ${field}`);
+        }
+    }
+});

@@ -539,6 +539,42 @@ async verifyAssetMeterListRefreshed() {
             .locator('#m3fdf179-ti')
             .click();
     }
+
+    async enterFullTrips(value) {
+    await this.frame
+        .getByRole('textbox', { name: 'Full trips' })
+        .fill(value);
+}
+
+async enterReducedTrips(value) {
+    await this.frame
+        .getByRole('textbox', { name: 'Reduced trips' })
+        .fill(value);
+}
+
+async enterAutoreclose(value) {
+    await this.frame
+        .getByRole('textbox', { name: 'Autoreclose', exact: true })
+        .fill(value);
+}
+
+async enterNewReadingDate(value) {
+    await this.frame
+        .getByRole('textbox', { name: 'New Reading Date' })
+        .fill(value);
+}
+
+async enterControlEngineer(value) {
+    await this.frame
+        .getByRole('textbox', { name: 'Control Engineer' })
+        .fill(value);
+}
+
+async enterNotes(value) {
+    await this.frame
+        .getByRole('textbox', { name: 'Notes' })
+        .fill(value);
+}
 } 
 
 module.exports = AssetMeterPage;
