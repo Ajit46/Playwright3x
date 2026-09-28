@@ -586,3 +586,34 @@ When('User enters the following values:', async function (dataTable) {
         }
     }
 });
+
+// recent
+Then(
+    'the following Enter New Reading fields should be displayed:',
+    async function (dataTable) {
+
+        const assetMeterPage = new AssetMeterPage(this.page);
+
+        for (const fieldName of dataTable.raw().flat()) {
+            await assetMeterPage.verifyEnterNewReadingFieldDisplayed(fieldName);
+        }
+    }
+);
+
+
+When(
+    'User enters the following values:',
+    async function (dataTable) {
+
+        const assetMeterPage = new AssetMeterPage(this.page);
+
+        const rows = dataTable.hashes();
+
+        for (const row of rows) {
+            await assetMeterPage.enterNewReadingValue(
+                row.Field,
+                row.Value
+            );
+        }
+    }
+);

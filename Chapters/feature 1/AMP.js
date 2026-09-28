@@ -575,6 +575,105 @@ async enterNotes(value) {
         .getByRole('textbox', { name: 'Notes' })
         .fill(value);
 }
+
+//recent
+async verifyEnterNewReadingFieldDisplayed(fieldName) {
+
+    let field;
+
+    switch (fieldName) {
+
+        case 'Full trips':
+            field = this.frame.locator('#mf141150a-1b');
+            break;
+
+        case 'Reduced trips':
+            field = this.frame.locator('#m293d625e-1b');
+            break;
+
+        case 'Autoreclose':
+        case 'New Reading Date':
+        case 'Control Engineer':
+        case 'Notes':
+            field = this.frame
+                .locator('label.text.label')
+                .filter({ hasText: fieldName })
+                .first();
+            break;
+
+        default:
+            throw new Error(
+                `Unsupported Enter New Reading field: ${fieldName}`
+            );
+    }
+
+    await expect(
+        field,
+        `Enter New Reading field "${fieldName}" should be displayed`
+    ).toBeVisible({ timeout: 10000 });
+
+    console.log(
+        `Verified Enter New Reading field: ${fieldName}`
+    );
+}
+
+
+async enterNewReadingValue(fieldName, value) {
+
+    let field;
+
+    switch (fieldName) {
+
+        case 'Full trips':
+            field = this.frame.getByRole('textbox', {
+                name: 'Full trips'
+            });
+            break;
+
+        case 'Reduced trips':
+            field = this.frame.getByRole('textbox', {
+                name: 'Reduced trips'
+            });
+            break;
+
+        case 'Autoreclose':
+            field = this.frame.getByRole('textbox', {
+                name: 'Autoreclose',
+                exact: true
+            });
+            break;
+
+        case 'New Reading Date':
+            field = this.frame.getByRole('textbox', {
+                name: 'New Reading Date'
+            });
+            break;
+
+        case 'Control Engineer':
+            field = this.frame.getByRole('textbox', {
+                name: 'Control Engineer'
+            });
+            break;
+
+        case 'Notes':
+            field = this.frame.getByRole('textbox', {
+                name: 'Notes'
+            });
+            break;
+
+        default:
+            throw new Error(
+                `Unsupported Enter New Reading field: ${fieldName}`
+            );
+    }
+
+    await field.click();
+    await field.fill(value);
+
+    console.log(
+        `Entered "${value}" in "${fieldName}"`
+    );
+}
 } 
 
 module.exports = AssetMeterPage;
