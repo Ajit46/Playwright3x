@@ -207,3 +207,25 @@ Scenario: Verify Priority Select Value popup in Defect Matrix Settings (SSEN)
     When User clicks on "Cancel"
 
     Then the Select Value popup should be closed
+
+
+    --------------
+    async verifySafetyPearDetailsDisplayed() {
+    const safetyPearDetails = this.frame.getByText(
+        'Safety (PEAR) Details',
+        { exact: true }
+    );
+
+    await expect(safetyPearDetails).toBeVisible();
+
+    console.log('Verified: Safety (PEAR) Details section is displayed');
+}
+------------
+Then(
+    'the Safety (PEAR) Details section should be displayed',
+    async function () {
+        const defectMatrixPage = new DefectMatrixPage(this.page);
+        await defectMatrixPage.verifySafetyPearDetailsDisplayed();
+    }
+);
+---------
