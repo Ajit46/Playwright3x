@@ -139,7 +139,8 @@ Then(
         );
     }
 );
-----------async verifyFilteredResults(filters) {
+----------
+async verifyFilteredResults(filters) {
 
     const resultRow = this.frame
         .locator('tr[data-has-data="true"]')
@@ -164,6 +165,36 @@ Then(
         ).toBeVisible({
             timeout: 10000
         });
+
+        console.log(
+            `Verified ${row["Column Name"]}: ${filterValue}`
+        );
+    }
+}
+----------------
+async verifyFilteredResults(filters) {
+
+    const resultRow = this.frame
+        .locator('tr[data-has-data="true"]')
+        .first();
+
+    await resultRow.waitFor({
+        state: 'visible',
+        timeout: 30000
+    });
+
+    for (const row of filters) {
+
+        const filterValue = row["Filter Value"];
+
+        const field = resultRow
+            .locator(`input[value="${filterValue}"]`)
+            .first();
+
+        await expect(
+            field,
+            `Filtered value "${filterValue}" should be displayed`
+        ).toBeVisible({ timeout: 10000 });
 
         console.log(
             `Verified ${row["Column Name"]}: ${filterValue}`
