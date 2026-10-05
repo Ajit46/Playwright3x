@@ -180,3 +180,30 @@ Then(
         await defectMatrixPage.verifySelectValuePopupClosed();
     }
 );
+
+--@MAS9UPG-CUSTAPPS-SI-TC-115
+Scenario: Verify Priority Select Value popup in Defect Matrix Settings (SSEN)
+
+    Given Default information is set to "THAM"
+    And Click ok to Default Information
+
+    When User opens the Maximo application "Defect Matrix Settings"
+
+    Then the Defect Matrix Settings header should be displayed
+    And the Defect Matrix Settings list should be loaded
+
+    When User clicks on "View Details"
+
+    Then the Safety (PEAR) Details section should be displayed
+
+    When User clicks on the Priority Select Value icon
+
+    Then the Select Value popup should be displayed
+
+    When User filters Select Value Description with "Low"
+
+    Then the Select Value result "Low" should be displayed
+
+    When User clicks on "Cancel"
+
+    Then the Select Value popup should be closed
