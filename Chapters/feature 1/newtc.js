@@ -229,3 +229,50 @@ Then(
     }
 );
 ---------
+Scenario: Verify Asset Select Value popup in Defect Matrix Settings
+
+    Given Default information is set to "THAM"
+    And Click ok to Default Information
+
+    When User opens the Maximo application "Defect Matrix Settings"
+    And User clicks on "View Details"
+
+    Then the Asset field should be editable
+
+    When User clicks on the Asset Select Value icon
+
+    Then the Select Value popup should be displayed
+    And the following Select Value popup controls should be displayed:
+        | Filter   |
+        | Download |
+        | Minimize |
+
+    When User clicks on "Cancel"
+
+    Then the Select Value popup should be closed
+    ---------------
+    async verifySelectValuePopupControlsDisplayed(controls) {
+    for (const control of controls) {
+        const controlLocator = this.frame.getByRole('button', {
+            name: control
+        });
+
+        await expect(controlLocator).toBeVisible();
+
+        console.log(`Verified Select Value popup control: ${control}`);
+    }
+}
+
+--------------------
+Then(
+    'the following Select Value popup controls should be displayed:',
+    async function (dataTable) {
+        const defectMatrixPage = new DefectMatrixPage(this.page);
+
+        const controls = dataTable.raw().flat();
+
+        await defectMatrixPage.verifySelectValuePopupControlsDisplayed(
+            controls
+        );
+    }
+);
