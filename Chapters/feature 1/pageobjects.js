@@ -60,3 +60,37 @@ Then(
         await defectMatrixPage.verifyDefectMatrixListLoaded();
     }
 );
+
+
+-------------
+    async applyColumnFilter(columnName, filterValue) {
+        if (!filterValue) {
+            return;
+        }
+
+        const filterField = this.frame.getByRole("textbox", {
+            name: columnName
+        });
+
+        await filterField.fill(filterValue);
+        await filterField.press("Enter");
+
+        console.log(
+            `Applied filter "${filterValue}" on "${columnName}"`
+        );
+    }
+
+    ------------------
+    When(
+    'User filters the following Defect Matrix Settings columns:',
+    async function (dataTable) {
+        const defectMatrixPage = new DefectMatrixPage(this.page);
+
+        for (const row of dataTable.hashes()) {
+            await defectMatrixPage.applyColumnFilter(
+                row["Column Name"],
+                row["Filter Value"]
+            );
+        }
+    }
+);
