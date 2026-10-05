@@ -94,3 +94,48 @@ Then(
         }
     }
 );
+
+---------------------------
+async verifyFilteredResults(filters) {
+
+    const resultRow = this.frame
+        .locator('tr[data-has-data="true"]')
+        .first();
+
+    await resultRow.waitFor({
+        state: 'visible',
+        timeout: 30000
+    });
+
+    for (const row of filters) {
+
+        const filterValue = row["Filter Value"];
+
+        const field = resultRow
+            .getByDisplayValue(filterValue, { exact: true })
+            .first();
+
+        await expect(
+            field,
+            `Filtered value "${filterValue}" should be displayed`
+        ).toBeVisible({ timeout: 10000 });
+
+        console.log(
+            `Verified ${row["Column Name"]}: ${filterValue}`
+        );
+    }
+}
+-----------
+custom.js
+Then(
+    'the filtered results should be displayed for each column',
+    async function () {
+
+        const defectMatrixPage =
+            new DefectMatrixPage(this.page);
+
+        await defectMatrixPage.verifyFilteredResults(
+            this.defectMatrixFilters
+        );
+    }
+);
