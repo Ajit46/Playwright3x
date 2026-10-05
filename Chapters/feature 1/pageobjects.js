@@ -201,3 +201,14 @@ async verifyFilteredResults(filters) {
         );
     }
 }
+-----
+const field = resultRow
+    .locator('td')
+    .nth(1)
+    .locator('input')
+    .first();
+
+await expect(
+    field,
+    `Filtered value "${filterValue}" should be displayed`
+).toHaveValue(filterValue, { timeout: 10000 });
