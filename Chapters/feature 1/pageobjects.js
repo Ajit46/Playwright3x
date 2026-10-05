@@ -38,7 +38,10 @@ class DefectMatrixPage extends BasePage {
 
 module.exports = DefectMatrixPage;
 
+//custom.js
 
+Then the Defect Matrix Settings header should be displayed
+const DefectMatrixPage = require("../../pageObjects/DefectMatrixPage");
 
 Then(
     'the Defect Matrix Settings header should be displayed',
