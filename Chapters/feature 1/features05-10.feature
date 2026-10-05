@@ -8,14 +8,17 @@ Scenario: Screen Validation for Defect Matrix Settings (SSEN) Application
 
     Then the Defect Matrix Settings list should be loaded
 
-    And the following columns should be displayed:
-        | Matrix Number |
-        | Attribute |
-        | Land Code |
-        | Description |
-        | Attribute Value |
-        | Asset Category |
-        | Location Type |
-        | Sub-Work Type |
-        | HCI |
-        | Default Priority |
+    When User filters the following Defect Matrix Settings columns:
+        | Column Name      | Filter Value |
+        | Matrix Number    | 198339 |
+        | Attribute        | INSULATIONCONDIT |
+        | Land Code        | MBEACH |
+        | Description      | Medium |
+        | Attribute Value  | SUBSTANTIALDETERIORATION |
+        | Asset Category   | PILNATSUBST |
+        | Location Type    | |
+        | Sub-Work Type    | DSS |
+        | HCI              | 510 |
+        | Default Priority | N |
+
+    Then the filtered results should be displayed for each column
