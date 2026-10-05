@@ -37,3 +37,23 @@ class DefectMatrixPage extends BasePage {
 }
 
 module.exports = DefectMatrixPage;
+
+
+
+Then(
+    'the Defect Matrix Settings header should be displayed',
+    async function () {
+        const defectMatrixPage = new DefectMatrixPage(this.page);
+
+        await defectMatrixPage.verifyDefectMatrixHeaderDisplayed();
+    }
+);
+
+Then(
+    'the Defect Matrix Settings list should be loaded',
+    async function () {
+        const defectMatrixPage = new DefectMatrixPage(this.page);
+
+        await defectMatrixPage.verifyDefectMatrixListLoaded();
+    }
+);
