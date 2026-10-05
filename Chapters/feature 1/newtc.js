@@ -47,3 +47,136 @@ async verifyPearFieldsAreEditable() {
         console.log(`Verified "${fieldName}" field is editable`);
     }
 }
+
+-----------------------
+When User clicks on the Priority Select Value icon
+
+Then the Select Value popup should be displayed
+
+When User filters Select Value Description with "Low"
+
+Then the Select Value result "Low" should be displayed
+
+When User clicks on "Cancel"
+
+Then the Select Value popup should be closed
+
+---------------------
+async clickPrioritySelectValue() {
+    await this.frame.locator('#m30c0a873-img').click();
+
+    console.log('Clicked Priority Select Value icon');
+}
+
+
+async verifySelectValuePopupDisplayed() {
+    const selectValuePopup = this.frame.getByRole('table', {
+        name: 'Select Value'
+    });
+
+    await expect(selectValuePopup).toBeVisible();
+
+    console.log('Verified Select Value popup is displayed');
+}
+
+
+async filterSelectValueDescription(description) {
+    const selectValuePopup = this.frame.getByRole('table', {
+        name: 'Select Value'
+    });
+
+    const descriptionField = selectValuePopup.getByRole('textbox', {
+        name: 'Description'
+    });
+
+    await descriptionField.click();
+    await descriptionField.fill(description);
+    await descriptionField.press('Enter');
+
+    console.log(`Filtered Select Value Description with "${description}"`);
+}
+
+
+async verifySelectValueResult(value) {
+    await expect(
+        this.frame.getByText(value, { exact: true })
+    ).toBeVisible();
+
+    console.log(`Verified Select Value result: ${value}`);
+}
+
+
+async clickSelectValueCancel() {
+    await this.frame.getByRole('button', {
+        name: 'Cancel'
+    }).click();
+
+    console.log('Clicked Cancel on Select Value popup');
+}
+
+
+async verifySelectValuePopupClosed() {
+    await expect(
+        this.frame.getByRole('table', {
+            name: 'Select Value'
+        })
+    ).not.toBeVisible();
+
+    console.log('Verified Select Value popup is closed');
+}
+------------------
+When(
+    'User clicks on the Priority Select Value icon',
+    async function () {
+        const defectMatrixPage = new DefectMatrixPage(this.page);
+        await defectMatrixPage.clickPrioritySelectValue();
+    }
+);
+
+
+Then(
+    'the Select Value popup should be displayed',
+    async function () {
+        const defectMatrixPage = new DefectMatrixPage(this.page);
+        await defectMatrixPage.verifySelectValuePopupDisplayed();
+    }
+);
+
+
+When(
+    'User filters Select Value Description with {string}',
+    async function (description) {
+        const defectMatrixPage = new DefectMatrixPage(this.page);
+        await defectMatrixPage.filterSelectValueDescription(description);
+    }
+);
+
+
+Then(
+    'the Select Value result {string} should be displayed',
+    async function (value) {
+        const defectMatrixPage = new DefectMatrixPage(this.page);
+        await defectMatrixPage.verifySelectValueResult(value);
+    }
+);
+
+
+When(
+    'User clicks on {string}',
+    async function (buttonName) {
+        const defectMatrixPage = new DefectMatrixPage(this.page);
+
+        if (buttonName === 'Cancel') {
+            await defectMatrixPage.clickSelectValueCancel();
+        }
+    }
+);
+
+
+Then(
+    'the Select Value popup should be closed',
+    async function () {
+        const defectMatrixPage = new DefectMatrixPage(this.page);
+        await defectMatrixPage.verifySelectValuePopupClosed();
+    }
+);
