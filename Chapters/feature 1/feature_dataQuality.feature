@@ -107,3 +107,172 @@ Then(
         await dataQualityPage.verifyRuleListHasResults();
     }
 );
+
+------------------------
+const { Given, When, Then } = require('@cucumber/cucumber');
+const DataQualityResultsetPage =
+    require('../pages/DataQualityResultsetPage');
+
+
+// Verify Rule List, Asset Records and Location Records sections
+Then(
+    'the {string} section should be displayed',
+    async function (sectionName) {
+        const dataQualityPage =
+            new DataQualityResultsetPage(this.page);
+
+        await dataQualityPage.verifySectionDisplayed(sectionName);
+    }
+);
+
+
+// Click any rule set number
+When(
+    'User clicks on any rule set number',
+    async function () {
+        const dataQualityPage =
+            new DataQualityResultsetPage(this.page);
+
+        await dataQualityPage.clickAnyRuleSetNumber();
+    }
+);
+
+
+// Verify Rule List details
+Then(
+    'the Rule List details should be displayed',
+    async function () {
+        const dataQualityPage =
+            new DataQualityResultsetPage(this.page);
+
+        await dataQualityPage.verifyRuleListDetailsDisplayed();
+    }
+);
+
+
+// Apply the Rule List filter
+When(
+    'User filters the Rule List by internal value {string}',
+    async function (value) {
+        const dataQualityPage =
+            new DataQualityResultsetPage(this.page);
+
+        await dataQualityPage.clickRuleListFilter();
+        await dataQualityPage.filterRuleListByInternalValue(value);
+    }
+);
+
+
+// Validate filtered results
+Then(
+    'the Rule List should display records with internal value {string}',
+    async function (expectedValue) {
+        const dataQualityPage =
+            new DataQualityResultsetPage(this.page);
+
+        await dataQualityPage.verifyRuleListFilteredByInternalValue(
+            expectedValue
+        );
+    }
+);
+
+-----------     
+const { expect } = require('@playwright/test');
+
+class DataQualityResultsetPage {
+    constructor(page) {
+        this.page = page;
+        this.frame = page.frameLocator('iframe[title="Manage"]');
+
+        this.ruleListTable = this.frame.getByRole('table', {
+            name: 'Rule List'
+        });
+
+        this.assetRecordsTable = this.frame.getByRole('table', {
+            name: 'Asset Records'
+        });
+
+        this.locationRecordsTable = this.frame.getByRole('table', {
+            name: 'Location Records'
+        });
+    }
+
+    // Verify Rule List, Asset Records or Location Records section
+    async verifySectionDisplayed(sectionName) {
+        const section = this.frame.getByRole('table', {
+            name: sectionName,
+            exact: true
+        });
+
+        await expect(section).toBeVisible({ timeout: 10000 });
+        console.log(`Verified section displayed: ${sectionName}`);
+    }
+
+    // Click any rule set number in Rule List
+    async clickAnyRuleSetNumber() {
+        const ruleSetNumber = this.ruleListTable
+            .getByRole('row')
+            .nth(1)
+            .getByRole('cell')
+            .first();
+
+        await expect(ruleSetNumber).toBeVisible({ timeout: 10000 });
+        await ruleSetNumber.click();
+
+        await this.page.waitForTimeout(1000);
+
+        console.log('Clicked a rule set number');
+    }
+
+    // Verify Rule List details are displayed
+    async verifyRuleListDetailsDisplayed() {
+        await expect(this.ruleListTable).toBeVisible({
+            timeout: 10000
+        });
+
+        console.log('Verified Rule List details are displayed');
+    }
+
+    // Open the Rule List Filter
+    async clickRuleListFilter() {
+        await this.frame.getByRole('link', {
+            name: 'Open Filter CTRL+Z'
+        }).first().click();
+
+        console.log('Opened Rule List Filter');
+    }
+
+    // Apply filter on Rule's internal Value
+    async filterRuleListByInternalValue(value) {
+        const filterField = this.ruleListTable.getByRole('textbox', {
+            name: "Rule's internal Value"
+        });
+
+        await expect(filterField).toBeVisible({ timeout: 10000 });
+        await filterField.fill(value);
+        await filterField.press('Enter');
+
+        await this.page.waitForTimeout(1000);
+
+        console.log(`Applied Rule List filter: ${value}`);
+    }
+
+    // Verify filtered results
+    async verifyRuleListFilteredByInternalValue(expectedValue) {
+        const rows = this.ruleListTable.getByRole('row');
+
+        await expect(rows.nth(1)).toBeVisible({ timeout: 10000 });
+
+        const rowCount = await rows.count();
+        expect(rowCount).toBeGreaterThan(1);
+
+        console.log(
+            `Rule List contains ${rowCount - 1} data row(s) after filtering by ${expectedValue}`
+        );
+
+        // TODO: Add column-specific assertions after confirming
+        // the exact locator for Rule's internal Value cells.
+    }
+}
+
+module.exports = DataQualityResultsetPage;
