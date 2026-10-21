@@ -371,3 +371,56 @@ Then(
         await dataQualityPage.verifyLocationRecordsStatus(status);
     }
 );
+---------------------------------------------------------------------------------]
+
+@MASQUPG-CUSTAPPS-SI-TC-124
+Feature: Location View validation in Data Quality ResultsSet
+
+  Scenario: Verify Location View and Issue List for Location
+    Given Default information is set to "THAM"
+    And User clicks ok to Default Information
+    When User opens the Maximo application "Data Quality ResultsSet"
+    And User clicks on the "Location View" tab
+    Then the "Locations" section should be displayed
+    And the "Issue List for Location" section should be displayed
+------------------------------------------------
+  async clickLocationViewTab() {
+        await this.frame
+            .getByRole('tab', { name: 'Location View' })
+            .click();
+    }
+
+    async verifyLocationsSectionDisplayed() {
+        await expect(
+            this.frame
+                .getByRole('form', { name: 'main form' })
+                .getByText('Locations', { exact: true })
+        ).toBeVisible();
+    }
+
+    async verifyIssueListForLocationDisplayed() {
+        await expect(
+            this.frame.getByText('Issue List for Location', {
+                exact: true
+            })
+        ).toBeVisible();
+    }
+    -------------------------------------
+    When('User clicks on the {string} tab', async function (tabName) {
+    if (tabName === 'Location View') {
+        const locationViewPage = new LocationViewPage(this.page);
+        await locationViewPage.clickLocationViewTab();
+    }
+});
+
+Then('the {string} section should be displayed', async function (sectionName) {
+    const locationViewPage = new LocationViewPage(this.page);
+
+    if (sectionName === 'Locations') {
+        await locationViewPage.verifyLocationsSectionDisplayed();
+    } else if (sectionName === 'Issue List for Location') {
+        await locationViewPage.verifyIssueListForLocationDisplayed();
+    } else {
+        throw new Error(`Unsupported section: ${sectionName}`);
+    }
+});
