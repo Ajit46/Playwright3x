@@ -276,3 +276,98 @@ class DataQualityResultsetPage {
 }
 
 module.exports = DataQualityResultsetPage;
+
+--------------
+```gherkin
+@MASQUPG-CUSTAPPS-SI-TC-122
+Scenario: Verify Filter functionality in Location Records
+    Given Default information is set to "THAM"
+    And Click ok to Default Information
+    When User opens the Maximo application "Data Quality Resultset"
+    Then the Data Quality Resultset header should be displayed
+    When User clicks on the Filter icon in "Location Records" section
+    And User filters Location Records by Status "OPERATING"
+    Then all displayed Location Records should have Status "OPERATING"
+```
+ async clickLocationRecordsFilter() {
+        const filterIcon = this.frame
+            .locator('#m24cfeb-to-holder')
+            .getByRole('link', {
+                name: 'Open Filter CTRL+Z'
+            });
+
+        await filterIcon.click();
+    }
+
+    async enterLocationRecordsStatusFilter(status) {
+        const statusFilter = this.frame.getByRole('textbox', {
+            name: 'Status',
+            exact: true
+        });
+
+        await expect(statusFilter).toBeVisible({ timeout: 10000 });
+        await statusFilter.fill(status);
+        await statusFilter.press('Enter');
+
+        console.log(`Applied Location Records Status filter: ${status}`);
+    }
+
+    async verifyLocationRecordsStatus(expectedStatus) {
+        const rows = this.frame.locator(
+            'tr[data-has-data="true"][currentrow="true"]'
+        );
+
+        await expect(rows.first()).toBeVisible({ timeout: 15000 });
+
+        const rowCount = await rows.count();
+        expect(rowCount).toBeGreaterThan(0);
+
+        const statusHeader = this.frame.getByRole('columnheader', {
+            name: 'Status',
+            exact: true
+        }).first();
+
+        const headerId = await statusHeader.getAttribute('id');
+
+        for (let i = 0; i < rowCount; i++) {
+            const statusCell = rows.nth(i).locator(
+                `td[headers="${headerId}"]`
+            );
+
+            await expect(statusCell).toContainText(expectedStatus);
+        }
+
+        console.log(
+            `Verified ${rowCount} displayed Location Records have Status "${expectedStatus}"`
+        );
+    }
+----
+When(
+    'User clicks on the Filter icon in {string} section',
+    async function (sectionName) {
+        if (sectionName !== 'Location Records') {
+            throw new Error(
+                `This step implementation supports Location Records only, received: ${sectionName}`
+            );
+        }
+
+        const dataQualityPage = new DataQualityResultsetPage(this.page);
+        await dataQualityPage.clickLocationRecordsFilter();
+    }
+);
+
+When(
+    'User filters Location Records by Status {string}',
+    async function (status) {
+        const dataQualityPage = new DataQualityResultsetPage(this.page);
+        await dataQualityPage.enterLocationRecordsStatusFilter(status);
+    }
+);
+
+Then(
+    'all displayed Location Records should have Status {string}',
+    async function (status) {
+        const dataQualityPage = new DataQualityResultsetPage(this.page);
+        await dataQualityPage.verifyLocationRecordsStatus(status);
+    }
+);
