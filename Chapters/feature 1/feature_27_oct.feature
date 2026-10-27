@@ -274,3 +274,63 @@ Then(
         }
     }
 );
+----------------
+
+class ESQCRHighRiskPage extends BasePage {
+
+    constructor(page) {
+        super(page);
+    }
+
+    async clickQuickSearchMenu() {
+        const quickSearchMenu = this.frame.getByRole('button', {
+            name: 'Quick Search menu'
+        });
+
+        await quickSearchMenu.click();
+    }
+
+    async verifyQuickSearchOptions(options) {
+        for (const row of options) {
+            const optionName = row[0];
+
+            const option = this.frame.getByText(optionName, {
+                exact: true
+            });
+
+            await expect(option).toBeVisible({ timeout: 30000 });
+        }
+    }
+
+    async clickMoreSearchFields() {
+        const moreSearchFields = this.frame.getByText('More Search Fields', {
+            exact: true
+        });
+
+        await moreSearchFields.click();
+    }
+
+    async verifyMoreSearchFieldsPopup() {
+        const popupTitle = this.frame.getByText(
+            'More Search Fields | Current',
+            { exact: true }
+        );
+
+        await expect(popupTitle).toBeVisible({ timeout: 30000 });
+    }
+
+    async verifyMoreSearchFieldsButtons(buttons) {
+        for (const row of buttons) {
+            const buttonName = row[0];
+
+            const button = this.frame.getByRole('button', {
+                name: buttonName,
+                exact: true
+            });
+
+            await expect(button).toBeVisible({ timeout: 30000 });
+        }
+    }
+}
+
+module.exports = ESQCRHighRiskPage;
