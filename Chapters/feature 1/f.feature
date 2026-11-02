@@ -156,3 +156,164 @@ Then('ESQCR Land Usage should contain the selected value {string}', async functi
 
     await esqcrHighRiskPage.verifySelectedLandUsageValue(expectedValue);
 });
+
+
+-----------------
+Feature: Validate Item Stewards domain navigation in ESQCR High Risk
+
+  Scenario: Verify Select Value and Go To Person Groups for Item Stewards
+    When User opens the Maximo application "ESQCR High Risk"
+    And User clicks on Quick Search menu
+    And User clicks on "More Search Fields"
+    And User opens the dropdown for "Item Stewards"
+    And User selects "Select Value"
+    Then "Select Value" popup should be displayed
+    When User closes the Select Value popup
+    And User opens the dropdown for "Item Stewards"
+    And User selects "Go To Person Groups"
+    Then "Persons Groups" page should be displayed
+    When User searches for Person Group "ELEC"
+    And User selects Person Group "ELEC"
+    And User clicks on "Return With Value"
+    Then Item Stewards field should contain "=ELEC"
+
+
+----------------------
+const { expect } = require('@playwright/test');
+const BasePage = require('./BasePage');
+
+class ESQCRHighRiskPage extends BasePage {
+
+    async openItemStewardsDropdown() {
+        await this.frame.locator('#m9542e964-img').click();
+    }
+
+    async selectDropdownOption(optionName) {
+        await this.frame.getByRole('menuitem', {
+            name: optionName,
+            exact: true
+        }).click();
+    }
+
+    async verifySelectValuePopup() {
+        const selectValuePopup = this.frame.getByRole('group', {
+            name: 'Select Value Dialog Button'
+        });
+
+        await expect(selectValuePopup).toContainText('Select Value');
+    }
+
+    async closeSelectValuePopup() {
+        const selectValuePopup = this.frame.getByRole('group', {
+            name: 'Select Value Dialog Button'
+        });
+
+        await selectValuePopup.getByRole('button', {
+            name: 'Cancel'
+        }).click();
+    }
+
+    async verifyPersonsGroupsPage() {
+        await expect(
+            this.frame.getByRole('heading', {
+                name: 'Persons Groups',
+                exact: true
+            })
+        ).toBeVisible();
+    }
+
+    async searchPersonGroup(groupName) {
+        const personGroupSearch = this.frame.getByRole('textbox', {
+            name: 'Person Group'
+        });
+
+        await personGroupSearch.fill(groupName);
+        await personGroupSearch.press('Enter');
+    }
+
+    async selectPersonGroup(groupName) {
+        await this.frame.getByText(groupName, {
+            exact: true
+        }).click();
+    }
+
+    async clickReturnWithValue() {
+        await this.frame.getByRole('button', {
+            name: 'Return With Value',
+            exact: true
+        }).click();
+    }
+
+    async verifyItemStewardsValue(expectedValue) {
+        const itemStewardsField = this.frame.getByRole('textbox', {
+            name: 'Item Stewards',
+            description: '=ELEC'
+        });
+
+        await expect(itemStewardsField).toBeVisible();
+        await expect(itemStewardsField).toHaveValue(expectedValue);
+    }
+}
+
+module.exports = ESQCRHighRiskPage;
+
+---------------------------------------
+const { When, Then } = require('@cucumber/cucumber');
+const ESQCRHighRiskPage = require('../pages/ESQCRHighRiskPage');
+
+When('User opens the dropdown for {string}', async function (fieldName) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+
+    if (fieldName === 'Item Stewards') {
+        await esqcrHighRiskPage.openItemStewardsDropdown();
+    }
+});
+
+When('User selects {string}', async function (optionName) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.selectDropdownOption(optionName);
+});
+
+Then('{string} popup should be displayed', async function (popupName) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+
+    if (popupName === 'Select Value') {
+        await esqcrHighRiskPage.verifySelectValuePopup();
+    }
+});
+
+When('User closes the Select Value popup', async function () {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.closeSelectValuePopup();
+});
+
+Then('{string} page should be displayed', async function (pageName) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+
+    if (pageName === 'Persons Groups') {
+        await esqcrHighRiskPage.verifyPersonsGroupsPage();
+    }
+});
+
+When('User searches for Person Group {string}', async function (groupName) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.searchPersonGroup(groupName);
+});
+
+When('User selects Person Group {string}', async function (groupName) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.selectPersonGroup(groupName);
+});
+
+When('User clicks on {string}', async function (buttonName) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+
+    if (buttonName === 'Return With Value') {
+        await esqcrHighRiskPage.clickReturnWithValue();
+    }
+});
+
+Then('Item Stewards field should contain {string}', async function (expectedValue) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.verifyItemStewardsValue(expectedValue);
+});
