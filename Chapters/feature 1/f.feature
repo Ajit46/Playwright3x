@@ -317,3 +317,134 @@ Then('Item Stewards field should contain {string}', async function (expectedValu
     const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
     await esqcrHighRiskPage.verifyItemStewardsValue(expectedValue);
 });
+
+
+
+----------
+async openItemStewardsDropdown() {
+    await this.frame.locator('#m9542e964-img').click();
+}
+
+async clickSelectValue() {
+    await this.frame.getByRole('menuitem', {
+        name: 'Select Value',
+        exact: true
+    }).click();
+}
+
+async verifySelectValuePage() {
+    await expect(
+        this.frame.getByRole('heading', {
+            name: 'Select Value',
+            exact: true
+        })
+    ).toBeVisible();
+}
+
+async clickCancel() {
+    await this.frame.getByRole('button', {
+        name: 'Cancel',
+        exact: true
+    }).click();
+}
+
+async clickGoToPersonGroups() {
+    await this.frame.getByRole('menuitem', {
+        name: 'Go To Person Groups',
+        exact: true
+    }).click();
+}
+
+async verifyPersonsGroupsPage() {
+    await expect(
+        this.frame.getByRole('heading', {
+            name: 'Persons Groups',
+            exact: true
+        })
+    ).toBeVisible();
+}
+
+async searchPersonGroup(groupName) {
+    await this.frame.getByRole('textbox', {
+        name: 'Person Group'
+    }).fill(groupName);
+
+    await this.frame.getByRole('textbox', {
+        name: 'Person Group'
+    }).press('Enter');
+}
+
+async selectPersonGroup(groupName) {
+    await this.frame.getByText(groupName, {
+        exact: true
+    }).click();
+}
+
+async clickReturnWithValue() {
+    await this.frame.getByRole('button', {
+        name: 'Return With Value',
+        exact: true
+    }).click();
+}
+
+async verifyItemStewardsValue(expectedValue) {
+    const itemStewardsField = this.frame.getByRole('textbox', {
+        name: 'Item Stewards'
+    });
+
+    await expect(itemStewardsField).toBeVisible();
+    await expect(itemStewardsField).toHaveValue(expectedValue);
+}
+
+------------\
+
+
+When('User opens Item Stewards dropdown', async function () {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.openItemStewardsDropdown();
+});
+
+When('User clicks Select Value', async function () {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.clickSelectValue();
+});
+
+Then('Select Value page should be displayed', async function () {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.verifySelectValuePage();
+});
+
+When('User clicks Cancel in Select Value popup', async function () {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.clickCancel();
+});
+
+When('User clicks Go To Person Groups', async function () {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.clickGoToPersonGroups();
+});
+
+Then('Persons Groups page should be displayed', async function () {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.verifyPersonsGroupsPage();
+});
+
+When('User searches Person Group {string}', async function (groupName) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.searchPersonGroup(groupName);
+});
+
+When('User selects Person Group {string}', async function (groupName) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.selectPersonGroup(groupName);
+});
+
+When('User clicks Return With Value', async function () {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.clickReturnWithValue();
+});
+
+Then('Item Stewards field should contain {string}', async function (expectedValue) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+    await esqcrHighRiskPage.verifyItemStewardsValue(expectedValue);
+});
