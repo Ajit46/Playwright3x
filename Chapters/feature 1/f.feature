@@ -93,3 +93,66 @@ Then('the Domains page should be displayed', async function () {
 
     await esqcrHighRiskPage.verifyDomainsPage();
 });
+---------------
+
+ When User selects domain value "TCKT2TCKT"
+
+    And User clicks on Return With Value
+
+    Then ESQCR Land Usage should contain the selected value "=TCKT2TCKT"
+
+    -----------
+
+
+    async selectDomainValue(domainValue) {
+        const domain = this.frame.getByRole('textbox', {
+            name: 'Domain',
+            description: domainValue
+        });
+
+        await domain.click();
+    }
+
+    // Click Return With Value
+    async clickReturnWithValue() {
+        const returnWithValueButton = this.frame.getByRole('button', {
+            name: 'Return With Value'
+        });
+
+        await returnWithValueButton.click();
+    }
+
+    // Verify returned value in ESQCR Land Usage field
+    async verifySelectedLandUsageValue(expectedValue) {
+        const landUsageField = this.frame.getByRole('textbox', {
+            name: 'ESQCR Land Usage'
+        });
+
+        await expect(landUsageField).toBeVisible({ timeout: 30000 });
+
+        await expect(landUsageField).toHaveValue(expectedValue, {
+            timeout: 30000
+        });
+    }
+
+    -----------
+    // Select domain value
+When('User selects domain value {string}', async function (domainValue) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+
+    await esqcrHighRiskPage.selectDomainValue(domainValue);
+});
+
+// Click Return With Value
+When('User clicks on Return With Value', async function () {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+
+    await esqcrHighRiskPage.clickReturnWithValue();
+});
+
+// Verify returned ESQCR Land Usage value
+Then('ESQCR Land Usage should contain the selected value {string}', async function (expectedValue) {
+    const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
+
+    await esqcrHighRiskPage.verifySelectedLandUsageValue(expectedValue);
+});
