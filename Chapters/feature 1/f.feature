@@ -447,4 +447,5 @@ When('User clicks Return With Value', async function () {
 Then('Item Stewards field should contain {string}', async function (expectedValue) {
     const esqcrHighRiskPage = new ESQCRHighRiskPage(this.page);
     await esqcrHighRiskPage.verifyItemStewardsValue(expectedValue);
+
 });
